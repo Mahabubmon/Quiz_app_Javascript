@@ -134,8 +134,7 @@ submitBtn.addEventListener("click", () => {
   if (answer) {
     const result = {
       question: quizData[currentQuiz].title,
-      selectedAnswer: answer,
-      correctAnswer: quizData[currentQuiz].correct,
+      selectedAnswer: answer, // Store the selected answer instead of correct answer
     };
     results.push(result);
 
@@ -157,12 +156,12 @@ function displayResults() {
     <ul>
       ${results
         .map(
-          (result) =>
-            `<li>${result.question}: ${result.selectedAnswer} (Correct: ${result.correctAnswer})</li>`
+          (result) => `<li>${result.question}: ${result.selectedAnswer}</li>`
         )
         .join("")}
     </ul>
     <button onclick="location.reload()">Reload</button>
   `;
 }
+
 // console.log(results);
