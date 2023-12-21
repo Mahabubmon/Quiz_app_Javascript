@@ -4,7 +4,7 @@ const quizData = [
     a: "Java",
     b: "C",
     c: "Python",
-    d: "javascript",
+    d: "JavaScript",
     correct: "d",
   },
   {
@@ -20,7 +20,7 @@ const quizData = [
     a: "Hypertext Markup Language",
     b: "Hypertext Markdown Language",
     c: "Hyperloop Machine Language",
-    d: "Helicopters Terminals Motorboats Lamborginis",
+    d: "Helicopters Terminals Motorboats Lamborghinis",
     correct: "a",
   },
   {
@@ -32,6 +32,7 @@ const quizData = [
     correct: "b",
   },
 ];
+
 const quiz = document.getElementById("quiz");
 const answerEls = document.querySelectorAll(".answer");
 const questionEl = document.getElementById("question");
@@ -42,7 +43,9 @@ const d_text = document.getElementById("d_text");
 const submitBtn = document.getElementById("submit");
 let currentQuiz = 0;
 let score = 0;
+
 loadQuiz();
+
 function loadQuiz() {
   deselectAnswers();
   const currentQuizData = quizData[currentQuiz];
@@ -52,9 +55,11 @@ function loadQuiz() {
   c_text.innerText = currentQuizData.c;
   d_text.innerText = currentQuizData.d;
 }
+
 function deselectAnswers() {
   answerEls.forEach((answerEl) => (answerEl.checked = false));
 }
+
 function getSelected() {
   let answer;
   answerEls.forEach((answerEl) => {
@@ -64,6 +69,7 @@ function getSelected() {
   });
   return answer;
 }
+
 submitBtn.addEventListener("click", () => {
   const answer = getSelected();
   if (answer) {
@@ -74,10 +80,19 @@ submitBtn.addEventListener("click", () => {
     if (currentQuiz < quizData.length) {
       loadQuiz();
     } else {
-      quiz.innerHTML = `
-           <h2>You answered ${score}/${quizData.length} questions correctly</h2>
-           <button onclick="location.reload()">Reload</button>
-           `;
+      displayResult();
     }
   }
 });
+
+function displayResult() {
+  const resultMsg =
+    score === quizData.length
+      ? "You are done well!"
+      : `You answered ${score}/${quizData.length} questions correctly`;
+
+  quiz.innerHTML = `
+    <h2>${resultMsg}</h2>
+    <button onclick="location.reload()">Reload</button>
+  `;
+}
