@@ -1,59 +1,118 @@
 const quizData = [
   {
-    question: "Which language runs in a web browser?",
-    a: "Java",
-    b: "C",
-    c: "Python",
-    d: "JavaScript",
-    correct: "d",
+    sl: 1,
+    title: "Which language runs in a web browser?",
+    options: [
+      {
+        label: "Java",
+        value: "option_0",
+      },
+      {
+        label: "C",
+        value: "option_1",
+      },
+      {
+        label: "Python",
+        value: "option_2",
+      },
+      {
+        label: "JavaScript",
+        value: "option_3",
+      },
+    ],
+    correct: "option_3",
   },
   {
-    question: "What does CSS stand for?",
-    a: "Central Style Sheets",
-    b: "Cascading Style Sheets",
-    c: "Cascading Simple Sheets",
-    d: "Cars SUVs Sailboats",
-    correct: "b",
+    sl: 2,
+    title: "What does CSS stand for?",
+    options: [
+      {
+        label: "Central Style Sheets",
+        value: "option_0",
+      },
+      {
+        label: "Cascading Style Sheets",
+        value: "option_1",
+      },
+      {
+        label: "Cascading Simple Sheets",
+        value: "option_2",
+      },
+      {
+        label: "Cars SUVs Sailboats",
+        value: "option_3",
+      },
+    ],
+    correct: "option_1",
   },
   {
-    question: "What does HTML stand for?",
-    a: "Hypertext Markup Language",
-    b: "Hypertext Markdown Language",
-    c: "Hyperloop Machine Language",
-    d: "Helicopters Terminals Motorboats Lamborghinis",
-    correct: "a",
+    sl: 3,
+    title: "What does HTML stand for?",
+    options: [
+      {
+        label: "Hypertext Markup Language",
+        value: "option_0",
+      },
+      {
+        label: "Hypertext Markdown Language",
+        value: "option_1",
+      },
+      {
+        label: "Hyperloop Machine Language",
+        value: "option_2",
+      },
+      {
+        label: "Helicopters Terminals Motorboats Lamborghinis",
+        value: "option_3",
+      },
+    ],
+    correct: "option_0",
   },
   {
-    question: "What year was JavaScript launched?",
-    a: "1996",
-    b: "1995",
-    c: "1994",
-    d: "none of the above",
-    correct: "b",
+    sl: 4,
+    title: "What year was JavaScript launched?",
+    options: [
+      {
+        label: "1996",
+        value: "option_0",
+      },
+      {
+        label: "1995",
+        value: "option_1",
+      },
+      {
+        label: "1994",
+        value: "option_2",
+      },
+      {
+        label: "none of the above",
+        value: "option_3",
+      },
+    ],
+    correct: "option_1",
   },
 ];
 
 const quiz = document.getElementById("quiz");
 const answerEls = document.querySelectorAll(".answer");
 const questionEl = document.getElementById("question");
-const a_text = document.getElementById("a_text");
-const b_text = document.getElementById("b_text");
-const c_text = document.getElementById("c_text");
-const d_text = document.getElementById("d_text");
 const submitBtn = document.getElementById("submit");
+const results = [];
+
 let currentQuiz = 0;
-let score = 0;
 
 loadQuiz();
 
 function loadQuiz() {
   deselectAnswers();
   const currentQuizData = quizData[currentQuiz];
-  questionEl.innerText = currentQuizData.question;
-  a_text.innerText = currentQuizData.a;
-  b_text.innerText = currentQuizData.b;
-  c_text.innerText = currentQuizData.c;
-  d_text.innerText = currentQuizData.d;
+  questionEl.innerText = currentQuizData.title;
+
+  // Display options dynamically
+  currentQuizData.options.forEach((option, index) => {
+    const optionElement = document.getElementById(option.value);
+    optionElement.nextElementSibling.innerText = option.label;
+  });
 }
 
 function deselectAnswers() {
@@ -73,26 +132,37 @@ function getSelected() {
 submitBtn.addEventListener("click", () => {
   const answer = getSelected();
   if (answer) {
-    if (answer === quizData[currentQuiz].correct) {
-      score++;
-    }
+    const result = {
+      question: quizData[currentQuiz].title,
+      selectedAnswer: answer,
+      correctAnswer: quizData[currentQuiz].correct,
+    };
+    results.push(result);
+
     currentQuiz++;
     if (currentQuiz < quizData.length) {
       loadQuiz();
     } else {
-      displayResult();
+      displayResults();
     }
   }
 });
 
-function displayResult() {
-  const resultMsg =
-    score === quizData.length
-      ? "You are done well!"
-      : `You answered ${score}/${quizData.length} questions correctly`;
+function displayResults() {
+  console.log("All results:", results);
 
+  // Display the results as you wish (e.g., show on the page)
   quiz.innerHTML = `
-    <h2>${resultMsg}</h2>
+    <h2>Results:</h2>
+    <ul>
+      ${results
+        .map(
+          (result) =>
+            `<li>${result.question}: ${result.selectedAnswer} (Correct: ${result.correctAnswer})</li>`
+        )
+        .join("")}
+    </ul>
     <button onclick="location.reload()">Reload</button>
   `;
 }
+// console.log(results);
