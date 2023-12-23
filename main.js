@@ -1,3 +1,4 @@
+// console.log(results);
 const quizData = [
   {
     sl: 1,
@@ -134,7 +135,8 @@ submitBtn.addEventListener("click", () => {
   if (answer) {
     const result = {
       question: quizData[currentQuiz].title,
-      selectedAnswer: answer, // Store the selected answer instead of correct answer
+      selectedAnswer: answer,
+      correctAnswer: quizData[currentQuiz].correct,
     };
     results.push(result);
 
@@ -148,9 +150,12 @@ submitBtn.addEventListener("click", () => {
 });
 
 function displayResults() {
-  console.log("All results:", results);
+  const correctCount = results.reduce(
+    (count, result) =>
+      result.selectedAnswer === result.correctAnswer ? count + 1 : count,
+    0
+  );
 
-  // Display the results as you wish (e.g., show on the page)
   quiz.innerHTML = `
     <h2>Results:</h2>
     <ul>
@@ -160,8 +165,8 @@ function displayResults() {
         )
         .join("")}
     </ul>
+    <p>You got ${correctCount} out of ${quizData.length} questions correct!</p>
+    ${correctCount === quizData.length ? "<p>You are doing great!</p>" : ""}
     <button onclick="location.reload()">Reload</button>
   `;
 }
-
-// console.log(results);
