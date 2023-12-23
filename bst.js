@@ -440,19 +440,46 @@ submitBtn.addEventListener("click", () => {
   }
 });
 
+// ... (existing code)
+
 function displayResults() {
   console.log("All results:", results);
 
-  // Display the results as you wish (e.g., show on the page)
+  // Calculate the total score
+  const totalScore = results.reduce(
+    (total, result) => total + parseInt(result.selectedAnswer),
+    0
+  );
+
+  // Determine the range and message based on the total score
+  let range;
+  let message;
+
+  if (totalScore >= 0 && totalScore <= 5) {
+    range = "0-5";
+    message = "You are doing great!";
+  } else if (totalScore > 5 && totalScore <= 10) {
+    range = "5-10";
+    message = "You're doing well, keep it up!";
+  } else if (totalScore > 10 && totalScore <= 15) {
+    range = "10-15";
+    message =
+      "You may want to pay attention to some aspects of your well-being.";
+  } else {
+    range = "15-20";
+    message =
+      "It's advisable to seek professional help. Take care of yourself.";
+  }
+
+  // Display the results and message
   quiz.innerHTML = `
     <h2>Results:</h2>
-    <ul>
-      ${results
-        .map(
-          (result) => `<li>${result.question}: ${result.selectedAnswer}</li>`
-        )
-        .join("")}
-    </ul>
+   
+    <p>Your total score is: ${totalScore}</p>
+    <p>Score Range: ${range}</p>
+    <p>${message}</p>
     <button onclick="location.reload()">Reload</button>
   `;
 }
+
+// ... (existing code)
