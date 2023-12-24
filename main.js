@@ -180,3 +180,28 @@ function goBack() {
     loadQuiz();
   }
 }
+
+const startContainer = document.getElementById("start-container");
+const userInfoForm = document.getElementById("user-info-form");
+const quizContainer = document.getElementById("quiz");
+
+userInfoForm.addEventListener("submit", (event) => {
+  event.preventDefault();
+
+  const name = document.getElementById("name").value;
+  const age = document.getElementById("age").value;
+
+  // Check if name and age are provided
+  if (name.trim() !== "" && age.trim() !== "") {
+    startContainer.style.display = "none"; // Hide the user info form
+    quizContainer.style.display = "block"; // Display the quiz
+
+    // You can use 'name' and 'age' as needed in your application
+    console.log("User Name:", name);
+    console.log("User Age:", age);
+  } else {
+    alert("Please enter both name and age.");
+  }
+});
+
+// Rest of your existing code
