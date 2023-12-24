@@ -422,6 +422,8 @@ function getSelected() {
   return answer;
 }
 
+const backBtn = document.getElementById("back");
+
 submitBtn.addEventListener("click", () => {
   const answer = getSelected();
   if (answer !== undefined) {
@@ -434,6 +436,11 @@ submitBtn.addEventListener("click", () => {
     currentQuiz++;
     if (currentQuiz < hdrsQuestions.length) {
       loadQuiz();
+
+      // Show the back button after the user answers the first question
+      if (currentQuiz === 1) {
+        backBtn.style.display = "inline-block";
+      }
     } else {
       displayResults();
     }
@@ -483,8 +490,6 @@ function displayResults() {
 }
 
 // ... (existing code)
-
-const backBtn = document.getElementById("back");
 
 backBtn.addEventListener("click", goBack);
 
