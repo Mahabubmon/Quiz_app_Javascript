@@ -170,3 +170,13 @@ function displayResults() {
     <button onclick="location.reload()">Reload</button>
   `;
 }
+
+const backButton = document.getElementById("back");
+backButton.addEventListener("click", goBack);
+
+function goBack() {
+  if (currentQuiz > 0) {
+    currentQuiz--;
+    loadQuiz();
+  }
+}
