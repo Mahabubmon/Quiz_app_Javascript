@@ -483,3 +483,14 @@ function displayResults() {
 }
 
 // ... (existing code)
+
+const backBtn = document.getElementById("back");
+
+backBtn.addEventListener("click", goBack);
+
+function goBack() {
+  if (currentQuiz > 0) {
+    currentQuiz--;
+    loadQuiz();
+  }
+}
