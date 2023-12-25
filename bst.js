@@ -1,3 +1,4 @@
+//data structure with array of object
 const hdrsQuestions = [
   {
     sl: 1,
@@ -386,6 +387,7 @@ const hdrsQuestions = [
   },
 ];
 
+//this code sets up variables to interact with various HTML elements on quiz
 const quiz = document.getElementById("quiz");
 const answerEls = document.querySelectorAll(".answer");
 const questionEl = document.getElementById("question");
@@ -394,6 +396,7 @@ const backBtn = document.getElementById("back");
 const results = [];
 let currentQuiz = 0;
 
+//quiz start after give the user info
 function startQuiz() {
   const userInfoContainer = document.getElementById("user-info");
   const quizContainer = document.getElementById("quiz");
@@ -404,6 +407,7 @@ function startQuiz() {
   loadQuiz();
 }
 
+// function is responsible for loading and displaying a new quiz question based on the current state of the quiz
 function loadQuiz() {
   deselectAnswers();
   const currentQuizData = hdrsQuestions[currentQuiz];
@@ -415,10 +419,12 @@ function loadQuiz() {
   });
 }
 
+//function is responsible for clearing any selected answers in the quiz
 function deselectAnswers() {
   answerEls.forEach((answerEl) => (answerEl.checked = false));
 }
 
+//function is responsible for retrieving the index of the selected answer among the available options.
 function getSelected() {
   let answer;
   answerEls.forEach((answerEl, index) => {
@@ -429,6 +435,7 @@ function getSelected() {
   return answer;
 }
 
+// adds an event listener to the submit button
 submitBtn.addEventListener("click", () => {
   const answer = getSelected();
   if (answer !== undefined) {
@@ -450,6 +457,7 @@ submitBtn.addEventListener("click", () => {
   }
 });
 
+//This code calculates the total score based on the user's answers and then logs the results to the console.
 function displayResults() {
   console.log("All results:", results);
 
@@ -458,6 +466,7 @@ function displayResults() {
     0
   );
 
+  //set the range of answer value and render it on html
   let range;
   let message;
 
@@ -486,6 +495,7 @@ function displayResults() {
   `;
 }
 
+//set the back button functionality
 backBtn.addEventListener("click", goBack);
 
 function goBack() {
