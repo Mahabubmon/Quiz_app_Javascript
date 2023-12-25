@@ -390,18 +390,25 @@ const quiz = document.getElementById("quiz");
 const answerEls = document.querySelectorAll(".answer");
 const questionEl = document.getElementById("question");
 const submitBtn = document.getElementById("submit");
+const backBtn = document.getElementById("back");
 const results = [];
-
 let currentQuiz = 0;
 
-loadQuiz();
+function startQuiz() {
+  const userInfoContainer = document.getElementById("user-info");
+  const quizContainer = document.getElementById("quiz");
+
+  userInfoContainer.style.display = "none"; // Hide user-info container
+  quizContainer.style.display = "block"; // Show quiz container
+
+  loadQuiz();
+}
 
 function loadQuiz() {
   deselectAnswers();
   const currentQuizData = hdrsQuestions[currentQuiz];
   questionEl.innerText = currentQuizData.title;
 
-  // Display options dynamically
   currentQuizData.options.forEach((option, index) => {
     const optionElement = document.getElementById(index.toString());
     optionElement.nextElementSibling.innerText = option.lable;
@@ -422,8 +429,6 @@ function getSelected() {
   return answer;
 }
 
-const backBtn = document.getElementById("back");
-
 submitBtn.addEventListener("click", () => {
   const answer = getSelected();
   if (answer !== undefined) {
@@ -436,8 +441,6 @@ submitBtn.addEventListener("click", () => {
     currentQuiz++;
     if (currentQuiz < hdrsQuestions.length) {
       loadQuiz();
-
-      // Show the back button after the user answers the first question
       if (currentQuiz === 1) {
         backBtn.style.display = "inline-block";
       }
@@ -447,18 +450,14 @@ submitBtn.addEventListener("click", () => {
   }
 });
 
-// ... (existing code)
-
 function displayResults() {
   console.log("All results:", results);
 
-  // Calculate the total score
   const totalScore = results.reduce(
     (total, result) => total + parseInt(result.selectedAnswer),
     0
   );
 
-  // Determine the range and message based on the total score
   let range;
   let message;
 
@@ -478,18 +477,14 @@ function displayResults() {
       "It's advisable to seek professional help. Take care of yourself.";
   }
 
-  // Display the results and message
   quiz.innerHTML = `
     <h2>Results:</h2>
-   
     <p>Your total score is: ${totalScore}</p>
     <p>Score Range: ${range}</p>
     <p>${message}</p>
     <button onclick="location.reload()">Reload</button>
   `;
 }
-
-// ... (existing code)
 
 backBtn.addEventListener("click", goBack);
 
